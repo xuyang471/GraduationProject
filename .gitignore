@@ -1,0 +1,13 @@
+# Node / Vue
+frontend/node_modules/
+frontend/dist/
+frontend/.idea/
+
+# Maven / Spring Boot
+backend/target/
+backend/.idea/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# System
+*.log
+*.DS_Store
