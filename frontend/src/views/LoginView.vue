@@ -65,13 +65,6 @@
           </el-button>
         </el-form-item>
 
-        <el-alert
-            title="测试账号"
-            type="info"
-            description="admin / admin123 | user / user123"
-            show-icon
-            :closable="false"
-        />
       </el-form>
     </el-card>
   </div>
@@ -80,6 +73,7 @@
 <script>
 import AuthService from '../services/auth.js'
 import { User, Lock } from '@element-plus/icons-vue'
+import { mapActions } from 'vuex'  // 添加这一行
 
 export default {
   name: 'LoginView',
@@ -99,6 +93,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['login']),
     async handleSubmit() {
       this.loading = true
       this.errorMessage = ''

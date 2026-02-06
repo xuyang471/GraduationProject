@@ -1,4 +1,5 @@
 const API_BASE_URL = 'http://localhost:8081/api';
+import store from '@/store'  // 添加这一行
 
 // 测试连接
 export const testConnection = async () => {
@@ -64,6 +65,10 @@ export const login = async (username, password) => {
         if (data.success && data.data && data.data.token) {
             localStorage.setItem('token', data.data.token);
             localStorage.setItem('user', JSON.stringify(data.data.user));
+
+            // 提交用户信息到Vuex store
+            store.dispatch('login', data.data.user);
+
             console.log('Token已保存:', data.data.token);
         }
 
@@ -84,6 +89,7 @@ export const login = async (username, password) => {
         };
     }
 };
+
 
 // 简单登录（表单格式，备用）
 export const simpleLogin = async (username, password) => {
@@ -134,15 +140,27 @@ export const checkAuth = () => {
 export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+
+    // 从Vuex store中清除用户信息
+    store.dispatch('logout');
+
     console.log('用户已登出');
     return { success: true, message: '登出成功' };
 };
 
+
 // 新增：获取当前用户信息
 export const getCurrentUser = () => {
+    // 优先从Vuex store获取用户信息
+    if (store.state.currentUser) {
+        return store.state.currentUser;
+    }
+
+    // 如果Vuex中没有，则从localStorage获取
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
 };
+
 
 // 更新默认导出对象，包含新增的 getCurrentUser 方法
 const AuthService = {
