@@ -28,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("PATCH");
 
         // 允许携带凭证
         config.setAllowCredentials(true);
